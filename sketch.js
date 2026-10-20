@@ -232,7 +232,6 @@ function preload() {
 function setup() {
   score = 0;
   score_current = 0;
-  max_star_pos = 0;
   lives = 3;
   current_level = Level.Moon_Level;
   cameraMovingSpeed = 7;
@@ -523,7 +522,6 @@ function buildup_level() {
   collectables_in_level = [];
   platforms_in_level = [];
   goal = new Flagpole(floor.width * 0.7, floor.y);
-  max_star_pos = 0;
   rain_drops = [];
   fireballs = [];
   var current_background_color, current_edge_color;

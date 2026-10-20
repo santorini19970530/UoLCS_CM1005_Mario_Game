@@ -324,7 +324,7 @@ function character(x, y) {
           this.yStatus = yStatus.Trapped;
         } else if (this.y + this.yVelocity < floor.y) {
           this.yVelocity += this.gravity;
-          platformID = this.checkCollide();
+          this.checkCollide();
         } else {
           this.y = floor.y;
           this.yVelocity = 0;
