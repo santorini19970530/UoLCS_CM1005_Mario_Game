@@ -24,13 +24,31 @@
 ----------------------------------------------------------------------- */
 
 class Platform {
-  constructor(x, y, width, height, color, edge_color) {
+  constructor(x, y, width, height, color, edge_color, speed) {
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
     this.color = color;
     this.edge_color = edge_color;
+    this.originX = x;
+    this.speed = speed || 0;
+    this.dir = 1;
+    this.range = 80;
+  }
+
+  move() {
+    if (!this.speed) return 0;
+    var previous = this.x;
+    this.x += this.speed * this.dir;
+    if (this.x > this.originX + this.range) {
+      this.x = this.originX + this.range;
+      this.dir = -1;
+    } else if (this.x < this.originX - this.range) {
+      this.x = this.originX - this.range;
+      this.dir = 1;
+    }
+    return this.x - previous;
   }
 
   show() {

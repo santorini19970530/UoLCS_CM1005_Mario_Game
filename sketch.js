@@ -170,6 +170,8 @@ var score_font;
 var wasted_font;
 var lives;
 var lost_sound;
+var canyon_sound;
+var enemy_sound;
 
 // enemy
 var fireballs = [];
@@ -206,6 +208,14 @@ function preload() {
   lost_sound = loadSound("./sounds/lost.mp3");
   lost_sound.setVolume(0.3);
   lost_sound.rate(1);
+
+  canyon_sound = loadSound("./sounds/lost.mp3");
+  canyon_sound.setVolume(0.45);
+  canyon_sound.rate(0.55);
+
+  enemy_sound = loadSound("./sounds/jump.mp3");
+  enemy_sound.setVolume(0.35);
+  enemy_sound.rate(0.45);
 
   background_sound = loadSound("./sounds/bgm.mp3");
   background_sound.setVolume(0.01);
@@ -268,6 +278,17 @@ function draw() {
   if (lives > 0) {
     if (current_level <= Level.Orange_Level) {
       background(background_color);
+
+      for (let i = 0; i < platforms_in_level.length; i++) {
+        var riding =
+          bear_character.isOnPlatform &&
+          bear_character.platformUnderFeet() === i;
+        var dx = platforms_in_level[i].move();
+        if (riding && dx) {
+          bear_character.x += dx;
+          bear_character.repost(bear_character.x, bear_character.y);
+        }
+      }
 
       // show the decorations depending on the level the character is in
       switch (current_level) {
@@ -387,12 +408,19 @@ function draw() {
     ) {
       bear_character.yStatus = yStatus.Attacked;
       bear_character.yVelocity = -10;
+      if (enemy_sound && !enemy_sound.isPlaying()) enemy_sound.play();
     }
 
   // check whether the character has touched one of the canyons
   // if yes, set the isDropCanyon property to be true and then make the character drop into the canyon effective next frame
   for (let i = 0; i < canyons_in_level.length; i++)
     if (canyons_in_level[i].checkDropIntoCanyon()) {
+      if (
+        bear_character.getYStatus() != yStatus.Trapped &&
+        canyon_sound &&
+        !canyon_sound.isPlaying()
+      )
+        canyon_sound.play();
       bear_character.yStatus = yStatus.Trapped;
       break;
     }
@@ -618,8 +646,9 @@ function buildup_level() {
       );
 
   // build up platform in assigned level
+  var movingPlatformPlaced = false;
   for (let i = 0; i < platforms.length; i++)
-    if (platforms[i].level == current_level)
+    if (platforms[i].level == current_level) {
       platforms_in_level.push(
         new Platform(
           platforms[i].x,
@@ -627,12 +656,16 @@ function buildup_level() {
           platforms[i].width,
           platforms[i].height,
           current_background_color,
-          current_edge_color
+          current_edge_color,
+          movingPlatformPlaced ? 0 : 2
         )
       );
+      movingPlatformPlaced = true;
+    }
 
   fireballs.push(new FireBall(-200, 350, 30));
   fireballs.push(new FireBall(500, 200, 30));
+  fireballs.push(new FireBall(900, floor.y, 36, true));
 }
 
 function scrollX() {

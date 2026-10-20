@@ -322,6 +322,8 @@ function character(x, y) {
         break;
       case yStatus.Falling:
         if (this.y + this.yVelocity >= floor.y && this.overCanyon()) {
+          if (this.yStatus != yStatus.Trapped && canyon_sound && !canyon_sound.isPlaying())
+            canyon_sound.play();
           this.yVelocity += this.gravity;
           this.yStatus = yStatus.Trapped;
         } else if (this.y + this.yVelocity < floor.y) {

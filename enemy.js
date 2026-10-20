@@ -23,13 +23,16 @@
 ----------------------------------------------------------------------- */
 
 class FireBall {
-  constructor(x, y, size) {
+  constructor(x, y, size, patrol) {
     this.x = x;
     this.y = y;
     this.size = size;
-    this.xVelocity = -5;
-    this.yVelocity = 10;
+    this.patrol = !!patrol;
+    this.xVelocity = this.patrol ? 3 : -5;
+    this.yVelocity = this.patrol ? 0 : 10;
     this.yLowestHeight = 50;
+    this.left = x - 120;
+    this.right = x + 120;
   }
 
   show() {
@@ -37,7 +40,7 @@ class FireBall {
 
     stroke(0, 0, 0);
     strokeWeight(5);
-    fill(255, 0, 0);
+    fill(this.patrol ? 255 : 255, this.patrol ? 140 : 0, 0);
     ellipse(this.x, this.y, this.size, this.size);
 
     pop();
@@ -55,6 +58,12 @@ class FireBall {
   }
 
   move() {
+    if (this.patrol) {
+      this.y = floor.y - this.size / 2;
+      this.x += this.xVelocity;
+      if (this.x < this.left || this.x > this.right) this.xVelocity *= -1;
+      return;
+    }
     this.x += this.xVelocity;
     if (this.y < floor.y - this.yLowestHeight) this.y += this.yVelocity;
   }
