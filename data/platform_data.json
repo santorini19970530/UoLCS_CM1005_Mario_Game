@@ -1,0 +1,14 @@
+[
+  { "x": 3150, "y": 312, "height": 20, "width": 100, "level": 0 },
+  { "x": 1400, "y": 312, "height": 20, "width": 104, "level": 0 },
+  { "x": 2500, "y": 312, "height": 20, "width": 136, "level": 0 },
+  { "x": 3150, "y": 312, "height": 20, "width": 100, "level": 1 },
+  { "x": 1400, "y": 312, "height": 20, "width": 112, "level": 1 },
+  { "x": 2500, "y": 313, "height": 20, "width": 112, "level": 1 },
+  { "x": 3150, "y": 312, "height": 20, "width": 100, "level": 2 },
+  { "x": 1400, "y": 312, "height": 20, "width": 113, "level": 2 },
+  { "x": 2400, "y": 300, "height": 20, "width": 194, "level": 2 },
+  { "x": 3150, "y": 312, "height": 20, "width": 100, "level": 3 },
+  { "x": 1400, "y": 312, "height": 20, "width": 165, "level": 3 },
+  { "x": 2500, "y": 312, "height": 20, "width": 173, "level": 3 }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "level": 0,
+    "canvas_color": [113, 89, 166],
+    "floor_color": [200, 200, 200, 0],
+    "floor_edge_color": [156, 139, 192]
+  },
+  {
+    "level": 1,
+    "canvas_color": [243, 204, 211],
+    "floor_color": [200, 200, 200, 0],
+    "floor_edge_color": [137, 89, 0]
+  },
+  {
+    "level": 2,
+    "canvas_color": [109, 233, 242],
+    "floor_color": [200, 200, 200, 0],
+    "floor_edge_color": [33, 71, 108]
+  },
+  {
+    "level": 3,
+    "canvas_color": [255, 234, 196],
+    "floor_color": [200, 200, 200, 0],
+    "floor_edge_color": [255, 179, 39]
+  }
+]
