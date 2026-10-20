@@ -251,12 +251,27 @@ function character(x, y) {
     }
 
     // update the horizontal position
-    if (this.isOnPlatform && !this.checkCollide()) {
-      console.log("hoho");
+    this.x += this.xVelocity;
+    if (
+      this.isOnPlatform &&
+      this.yStatus != yStatus.Jumping &&
+      this.platformUnderFeet() < 0
+    ) {
+      this.isOnPlatform = false;
       this.yStatus = yStatus.Falling;
     }
-    this.x += this.xVelocity;
     this.repost(this.x, this.y);
+  };
+
+  this.platformUnderFeet = function () {
+    for (let i = 0; i < platforms_in_level.length; i++) {
+      var platform = platforms_in_level[i];
+      var top = platform.y - platform.height;
+      var overlapsX =
+        this.x > platform.x && this.x < platform.x + platform.width;
+      if (overlapsX && Math.abs(this.y - top) <= 8) return i;
+    }
+    return -1;
   };
 
   this.overCanyon = function () {
@@ -304,7 +319,9 @@ function character(x, y) {
   this.moveY = function () {
     switch (this.yStatus) {
       case yStatus.Jumping:
-        this.platformJumpHeight = this.isOnPlatform ? 200 : 0;
+        if (this.isOnPlatform) this.platformJumpHeight = 200;
+        else if (this.yVelocity == 0) this.platformJumpHeight = 0;
+        this.isOnPlatform = false;
         if (
           this.y - this.height <
           this.groundHeight - this.y - this.platformJumpHeight
@@ -358,10 +375,14 @@ function character(x, y) {
         break;
     }
 
-    if (this.isOnPlatform) {
+    if (
+      this.isOnPlatform &&
+      this.yStatus != yStatus.Jumping &&
+      this.yStatus != yStatus.Trapped &&
+      this.yStatus != yStatus.Attacked
+    ) {
       this.yVelocity = 0;
       this.yStatus = yStatus.Stable;
-      this.isOnPlatform = false;
     }
 
     this.y += this.yVelocity;
