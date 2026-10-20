@@ -356,12 +356,12 @@ function character(x, y) {
         this.xVelocity = 0;
         this.acceleration = 0;
         this.yVelocity += this.gravity;
-        this.y += this.yVelocity;
-        this.yStatus = yStatus.Falling;
-        if (!lost_sound.isPlaying()) lost_sound.play();
-        lives -= 1;
-        score = score_current;
-        buildup_level();
+        if (this.y >= height + this.height) {
+          if (!lost_sound.isPlaying()) lost_sound.play();
+          lives -= 1;
+          score = score_current;
+          buildup_level();
+        }
         break;
       default:
         break;

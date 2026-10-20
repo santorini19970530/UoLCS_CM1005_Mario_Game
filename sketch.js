@@ -382,7 +382,10 @@ function draw() {
 
   // if the character gets touched with one of the enemies (fireballs), the level will be restarted to the beginning (and the score will go back to last level score) or ends
   for (let i = 0; i < fireballs.length; i++)
-    if (fireballs[i].checkCollideWithCharacter()) {
+    if (
+      fireballs[i].checkCollideWithCharacter() &&
+      bear_character.getYStatus() != yStatus.Attacked
+    ) {
       bear_character.yStatus = yStatus.Attacked;
       bear_character.yVelocity = -10;
     }
