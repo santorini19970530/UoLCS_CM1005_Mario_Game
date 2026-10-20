@@ -31,7 +31,7 @@
  * constructor function
  * show() : for drawing the heart out
  * checkIsFound() : for checking whether this collectable is being touched by the character;
- *    if the character distance with center of the collectable is larger than its radical size, this is considered as being collected
+ *    the bear is tested against the same point the heart is drawn at
  *
 ----------------------------------------------------------------------- */
 
@@ -111,14 +111,21 @@ class Collectable {
     noStroke();
   }
 
+  // show() shifts the heart by its width and height, so the drawn center is not (x, y)
+  drawnCenter() {
+    return {
+      x: this.x - this.width,
+      y: this.y - this.height / 2,
+    };
+  }
+
   checkIsFound() {
+    if (this.x === undefined || this.y === undefined) return;
+    var heart = this.drawnCenter();
+    var bearX = bear_character.getX();
+    var bearY = bear_character.getY() - 18;
     if (
-      dist(
-        bear_character.getX() + bear_character.width,
-        bear_character.getY() + bear_character.height,
-        this.x,
-        this.y + this.height
-      ) < Math.max(this.width, this.height)
+      dist(bearX, bearY, heart.x, heart.y) < Math.max(this.width, this.height)
     )
       this.isFound = true;
   }
