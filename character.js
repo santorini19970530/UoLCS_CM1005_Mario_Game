@@ -250,6 +250,8 @@ function character(x, y) {
     if (
       this.isOnPlatform &&
       this.yStatus != yStatus.Jumping &&
+      this.yStatus != yStatus.Trapped &&
+      this.yStatus != yStatus.Attacked &&
       this.platformUnderFeet() < 0
     ) {
       this.isOnPlatform = false;
@@ -336,14 +338,6 @@ function character(x, y) {
         this.xVelocity = 0;
         this.acceleration = 0;
         this.yVelocity += this.gravity;
-        this.y += this.yVelocity;
-        if (this.y >= height + this.height) {
-          if (!lost_sound.isPlaying()) lost_sound.play();
-          buildup_level();
-          lives -= 1;
-          score = score_current;
-          this.yStatus = yStatus.Falling;
-        }
         break;
       case yStatus.Attacked:
         this.xStatus = xStatus.Stable;
@@ -351,12 +345,6 @@ function character(x, y) {
         this.xVelocity = 0;
         this.acceleration = 0;
         this.yVelocity += this.gravity;
-        if (this.y >= height + this.height) {
-          if (!lost_sound.isPlaying()) lost_sound.play();
-          lives -= 1;
-          score = score_current;
-          buildup_level();
-        }
         break;
       default:
         break;
@@ -374,6 +362,19 @@ function character(x, y) {
 
     this.y += this.yVelocity;
     this.repost(this.x, this.y);
+
+    if (
+      (this.yStatus == yStatus.Trapped || this.yStatus == yStatus.Attacked) &&
+      this.y > height
+    )
+      this.die();
+  };
+
+  this.die = function () {
+    lives -= 1;
+    score = score_current;
+    buildup_level();
+    if (lost_sound && !lost_sound.isPlaying()) lost_sound.play();
   };
 
   // return value of variables
