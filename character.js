@@ -162,15 +162,28 @@ function character(x, y) {
     stroke(239, 127, 1);
 
     // Reshapes of the hands and the legs during different kinds of movement
+    var inAir =
+      this.yStatus == yStatus.Jumping || this.yStatus == yStatus.Falling;
     if (this.xStatus == xStatus.Stable && this.yStatus == yStatus.Stable) {
       ellipse(this.hands.leftHandPosX, this.hands.leftHandPosY, 8, 8);
       ellipse(this.hands.rightHandPosX, this.hands.rightHandPosY, 8, 8);
       ellipse(this.legs.leftLegPosX, this.legs.leftLegPosY, 8, 8);
       ellipse(this.legs.rightLegPosX, this.legs.rightLegPosY, 8, 8);
       noStroke();
+    } else if (this.xStatus == xStatus.Left && inAir) {
+      ellipse(this.hands.leftHandPosX, this.hands.leftHandPosY - 3, 18, 20);
+      ellipse(this.legs.leftLegPosX, this.legs.leftLegPosY - 3, 18, 20);
+      ellipse(this.hands.rightHandPosX, this.hands.rightHandPosY, 8, 8);
+      ellipse(this.legs.rightLegPosX, this.legs.rightLegPosY, 8, 8);
+      noStroke();
+    } else if (this.xStatus == xStatus.Right && inAir) {
+      ellipse(this.hands.leftHandPosX, this.hands.leftHandPosY, 8, 8);
+      ellipse(this.legs.leftLegPosX, this.legs.leftLegPosY, 8, 8);
+      ellipse(this.hands.rightHandPosX, this.hands.rightHandPosY - 3, 18, 20);
+      ellipse(this.legs.rightLegPosX, this.legs.rightLegPosY - 3, 18, 20);
+      noStroke();
     } else if (
-      this.yStatus == yStatus.Jumping ||
-      this.yStatus == yStatus.Falling ||
+      inAir ||
       this.yStatus == yStatus.Trapped ||
       this.yStatus == yStatus.Attacked
     ) {
@@ -190,24 +203,6 @@ function character(x, y) {
       ellipse(this.hands.rightHandPosX, this.hands.rightHandPosY, 18, 8);
       ellipse(this.legs.leftLegPosX, this.legs.leftLegPosY, 8, 8);
       ellipse(this.legs.rightLegPosX, this.legs.rightLegPosY, 18, 8);
-      noStroke();
-    } else if (
-      this.xStatus == xStatus.Right &&
-      (this.yStatus == yStatus.Jumping || this.yStatus == yStatus.Falling)
-    ) {
-      ellipse(this.hands.leftHandPosX, this.hands.leftHandPosY, 8, 8);
-      ellipse(this.legs.leftLegPosX, this.legs.leftLegPosY, 8, 8);
-      ellipse(this.hands.rightHandPosX, this.hands.rightHandPosY - 3, 18, 20);
-      ellipse(this.legs.rightLegPosX, this.legs.rightLegPosY - 3, 18, 20);
-      noStroke();
-    } else if (
-      this.xStatus == xStatus.Right &&
-      (this.yStatus == yStatus.Jumping || this.yStatus == yStatus.Falling)
-    ) {
-      ellipse(this.hands.leftHandPosX, this.hands.leftHandPosY - 3, 18, 20);
-      ellipse(this.legs.leftLegPosX, this.legs.leftLegPosY - 3, 18, 20);
-      ellipse(this.hands.rightHandPosX, this.hands.rightHandPosY, 8, 8);
-      ellipse(this.legs.rightLegPosX, this.legs.rightLegPosY, 8, 8);
       noStroke();
     }
   };
