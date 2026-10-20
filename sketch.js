@@ -325,6 +325,7 @@ function draw() {
       bear_character.moveY();
 
       goal.checkFlagpole();
+      goal.flag.flagMove();
 
       // if each round ends, the gameplay will be refreshed or the game will be ended with showing texts
       if (goal.isReached == true) {
@@ -367,8 +368,6 @@ function draw() {
     lostText.show();
     pop();
   }
-  goal.flag.flagMove();
-
   // if the character has touched one of the collectables, the collectable will disappear and the player will gain one more score
   for (let i = 0; i < collectables_in_level.length; i++) {
     collectables_in_level[i].checkIsFound();

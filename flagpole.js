@@ -77,12 +77,10 @@ class Flag {
   }
 
   flagMove() {
-    if (goal.isReached) {
-      if (this.y < floor.y - this.size) {
-        this.velocity += this.gravity;
-        this.y =
-          this.y + this.velocity < floor.y ? this.y + this.velocity : this.y;
-      } else goal.isReached = false;
+    if (goal.isReached && this.y < floor.y - this.size) {
+      this.velocity += this.gravity;
+      this.y =
+        this.y + this.velocity < floor.y ? this.y + this.velocity : this.y;
     }
   }
 }
