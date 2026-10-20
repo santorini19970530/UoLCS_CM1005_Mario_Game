@@ -10,6 +10,10 @@ Open the folder with a local server, then visit the printed address. Loading `in
 python3 -m http.server
 ```
 
+```bash
+php -S localhost:8000
+```
+
 Controls:
 
 - A: move left
