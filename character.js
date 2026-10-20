@@ -289,15 +289,7 @@ function character(x, y) {
   // check if character collide with platforms
   this.checkCollide = function () {
     for (let i = 0; i < platforms_in_level.length; i++) {
-      var a = {
-        left: this.x,
-        right: this.x + this.width,
-        top: this.y,
-        bottom: this.y + this.height,
-        xStatus: this.xStatus,
-        yStatus: this.yStatus,
-      };
-      if (platforms_in_level[i].checkCollision(a)) {
+      if (platforms_in_level[i].checkCollision()) {
         this.y = platforms_in_level[i].y - platforms_in_level[i].height - 1;
         this.isOnPlatform = true;
         return i;

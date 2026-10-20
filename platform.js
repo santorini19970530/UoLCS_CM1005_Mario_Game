@@ -45,15 +45,20 @@ class Platform {
   }
 
   checkCollision() {
-    var left = this.x;
-    var right = this.x + this.width;
     var top = this.y - this.height;
+    var feet = bear_character.y;
+    var previousFeet = feet - bear_character.yVelocity;
+    var overlapsX =
+      bear_character.x > this.x && bear_character.x < this.x + this.width;
 
-    // if the character is falling and character's vertical position is above the platform
-    // plus if the character is within the horizontal range of the platform
-    // the character is on the platfom
-    if (bear_character.yStatus == yStatus.Falling && bear_character.y >= top)
-      if (bear_character.x > left && bear_character.x < right) return true;
+    // land only when the feet cross the top from above
+    if (
+      overlapsX &&
+      bear_character.yVelocity >= 0 &&
+      previousFeet <= top + 4 &&
+      feet >= top - 4
+    )
+      return true;
     return false;
   }
 }
