@@ -259,6 +259,18 @@ function character(x, y) {
     this.repost(this.x, this.y);
   };
 
+  this.overCanyon = function () {
+    for (let i = 0; i < canyons_in_level.length; i++) {
+      var canyon = canyons_in_level[i];
+      if (
+        this.x > canyon.x &&
+        this.x + this.width < canyon.x + canyon.width
+      )
+        return true;
+    }
+    return false;
+  };
+
   // check if character collide with platforms
   this.checkCollide = function () {
     for (let i = 0; i < platforms_in_level.length; i++) {
@@ -303,7 +315,10 @@ function character(x, y) {
         else this.yVelocity = this.yVelocity;
         break;
       case yStatus.Falling:
-        if (this.y + this.yVelocity < floor.y) {
+        if (this.y + this.yVelocity >= floor.y && this.overCanyon()) {
+          this.yVelocity += this.gravity;
+          this.yStatus = yStatus.Trapped;
+        } else if (this.y + this.yVelocity < floor.y) {
           this.yVelocity += this.gravity;
           platformID = this.checkCollide();
         } else {

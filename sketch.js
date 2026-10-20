@@ -451,7 +451,7 @@ function keyReleased() {
       break;
     case 32:
       if (
-        bear_character.getYStatus() != yStatus.Trapped ||
+        bear_character.getYStatus() != yStatus.Trapped &&
         bear_character.getYStatus() != yStatus.Attacked
       )
         bear_character.yStatus = yStatus.Falling;
